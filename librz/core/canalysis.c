@@ -6389,6 +6389,28 @@ RZ_IPI void rz_core_analysis_function_until(RzCore *core, ut64 addr_end) {
 	rz_config_set(core->config, "analysis.limits", c ? c : "");
 }
 
+/**
+ *
+ * @param core
+ * @param cc
+ * @return
+ */
+RZ_API bool rz_core_analysis_function_cc_set(RzCore *core, const char *cc) {
+	if (!rz_analysis_cc_exist(core->analysis, cc)) {
+		const char *asmOs = rz_config_get(core->config, "asm.os");
+		RZ_LOG_ERROR("Unknown calling convention '%s' for '%s'\n", cc, asmOs);
+		return false;
+	} else {
+		RzAnalysisFunction *fcn = rz_analysis_get_fcn_in(core->analysis, core->offset, 0);
+		if (!fcn) {
+			RZ_LOG_ERROR("Cannot find function here\n");
+			return false;
+		}
+		fcn->cc = rz_str_constpool_get(&core->analysis->constpool, cc);
+	}
+	return true;
+}
+
 static bool archIsThumbable(RzCore *core) {
 	RzAsm *as = core ? core->rasm : NULL;
 	if (as && as->cur && as->bits <= 32 && as->cur->name) {

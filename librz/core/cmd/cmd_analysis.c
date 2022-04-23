@@ -1707,14 +1707,7 @@ RZ_IPI int rz_cmd_analysis_fcn(void *data, const char *input) {
 			char *argument = strdup(input + 2);
 			char *cc = argument;
 			rz_str_trim(cc);
-			if (!rz_analysis_cc_exist(core->analysis, cc)) {
-				const char *asmOs = rz_config_get(core->config, "asm.os");
-				eprintf("afc: Unknown calling convention '%s' for '%s'\n"
-					"See afcl for available types\n",
-					cc, asmOs);
-			} else {
-				fcn->cc = rz_str_constpool_get(&core->analysis->constpool, cc);
-			}
+			rz_core_analysis_function_cc_set(core, cc);
 			free(argument);
 			break;
 		}

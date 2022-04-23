@@ -725,6 +725,7 @@ RZ_API void rz_core_agraph_print(RzCore *core, int use_utf, const char *input);
 RZ_API void rz_core_analysis_flag_every_function(RzCore *core);
 RZ_API bool rz_core_analysis_function_rename(RzCore *core, ut64 addr, const char *_name);
 RZ_API bool rz_core_analysis_function_add(RzCore *core, const char *name, ut64 addr, bool analyze_recursively);
+RZ_API bool rz_core_analysis_function_cc_set(RzCore *core, const char *cc);
 RZ_API int rz_core_analysis_fcn(RzCore *core, ut64 at, ut64 from, int reftype, int depth);
 RZ_API RZ_OWN char *rz_core_analysis_function_autoname(RZ_NONNULL RzCore *core, RZ_NONNULL RzAnalysisFunction *fcn);
 RZ_API void rz_core_analysis_function_strings_print(RZ_NONNULL RzCore *core, RZ_NONNULL RzAnalysisFunction *fcn, RZ_NULLABLE PJ *pj);
